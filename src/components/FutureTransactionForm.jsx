@@ -25,6 +25,7 @@ class FutureTransactionForm extends Component {
 			amount: '',
 			date: '',
 			transactionType: '',
+			label: ''
 		};
 		this.handleInputChange = this.handleInputChange.bind(this);
 		this.handleSubmit = this.handleSubmit.bind(this);
@@ -35,6 +36,7 @@ class FutureTransactionForm extends Component {
 			amount: '',
 			date: '',
 			transactionType: '',
+			label: ''
 		});
 	}
 
@@ -70,6 +72,15 @@ class FutureTransactionForm extends Component {
 					step="0.01" 
 					min="0"
 					required
+				/>
+				<FieldGroup
+					id="label"
+					name="label"
+					type="text"
+					label="Label"
+					placeholder="Label"
+					value={this.state.label}
+					onChange={this.handleInputChange}
 				/>
 				<FieldGroup
 					id="date"

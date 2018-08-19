@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import Transaction from './Transaction';
 
 class FutureBalanceList extends Component {
 	render() {
@@ -8,14 +9,27 @@ class FutureBalanceList extends Component {
 				<thead>
 					<tr>
 						<th>Date</th>
-						<th>Balance</th>
+						<th>Starting Balance</th>
+						<th>Ending Balance</th>
 					</tr>
 				</thead>
 				<tbody>
 					{this.props.futureBalances.map((balance, index) => {
 						return (
 							<tr key={index}>
-								<td>{balance.date}</td>
+								<td>
+									{balance.date}
+									<ul className="list-unstyled">
+										{balance.transactions.map((transaction) => {
+											return (
+												<li>
+													<Transaction {...transaction}/>
+												</li>
+											);
+										})}
+									</ul>
+								</td>
+								<td>${balance.start}</td>
 								<td>${balance.amount}</td>
 							</tr>
 						);
