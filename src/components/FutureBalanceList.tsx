@@ -1,9 +1,19 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import Transaction from './Transaction';
+import * as React from 'react';
+import Transaction, { ITransaction } from './Transaction';
 
-class FutureBalanceList extends Component {
-	render() {
+interface IProps {
+	futureBalances: IFutureBalance[]
+}
+
+export interface IFutureBalance {
+	amount: number,
+	date: number,
+	start: number,
+	transactions: ITransaction[]
+}
+
+class FutureBalanceList extends React.Component<IProps> {
+	public render() {
 		return (
 			<table>
 				<thead>
@@ -14,15 +24,15 @@ class FutureBalanceList extends Component {
 					</tr>
 				</thead>
 				<tbody>
-					{this.props.futureBalances.map((balance, index) => {
+					{this.props.futureBalances.map((balance) => {
 						return (
-							<tr key={index}>
+							<tr key={balance.date}>
 								<td>
 									{balance.date}
 									<ul className="list-unstyled">
-										{balance.transactions.map((transaction) => {
+										{balance.transactions.map((transaction, index) => {
 											return (
-												<li>
+												<li key={index}>
 													<Transaction {...transaction}/>
 												</li>
 											);
@@ -39,9 +49,5 @@ class FutureBalanceList extends Component {
 		);
 	}
 }
-
-FutureBalanceList.propTypes = {
-	futureBalances: PropTypes.array
-};
 
 export default FutureBalanceList;

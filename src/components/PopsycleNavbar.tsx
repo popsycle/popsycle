@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
+import * as React from 'react';
 import { Navbar, Nav, NavItem } from 'react-bootstrap';
 
-class PopsycleNavbar extends Component {
+class PopsycleNavbar extends React.Component {
 	render() {
 		return (
 			<Navbar>

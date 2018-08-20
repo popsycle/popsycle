@@ -1,13 +1,18 @@
-import React, { Component } from 'react';
+import * as React from 'react';
 import { connect } from 'react-redux';
-import FutureBalanceList from './FutureBalanceList';
-import FutureTransactionForm from './FutureTransactionForm';
-import PropTypes from 'prop-types';
 import { addFutureTransaction } from '../actions/ledgerActions.js';
+import FutureBalanceList, { IFutureBalance } from './FutureBalanceList';
+import FutureTransactionForm from './FutureTransactionForm';
+import { ITransaction } from './Transaction';
 
+interface IProps {
+	currentBalance: number,
+	futureBalances:IFutureBalance[]
+	addFutureTransaction(transaction: ITransaction):void,
+}
 
-class FutureBalanceContainer extends Component {
-	render() {
+class FutureBalanceContainer extends React.Component<IProps> {
+	public render() {
 		return (
 			<div>
 				<h3>Future Balance Estimator</h3>
@@ -21,16 +26,11 @@ class FutureBalanceContainer extends Component {
 	}
 }
 
-FutureBalanceContainer.propTypes = {
-	currentBalance: PropTypes.number,
-	futureBalances: PropTypes.array,
-	addFutureTransaction: PropTypes.func
-};
-
+const account = 'omniAccount';
 const mapStateToProps = state => ({
-	currentBalance: state.ledger.accounts['omniAccount'].currentBalance,
-	futureBalances: state.ledger.accounts['omniAccount'].futureBalances,
-	futureTransactions: state.ledger.accounts['omniAccount'].futureTransactions
+	currentBalance: state.ledger.accounts[account].currentBalance,
+	futureBalances: state.ledger.accounts[account].futureBalances,
+	futureTransactions: state.ledger.accounts[account].futureTransactions
 });
 
 const mapDispatchToProps = dispatch => ({
