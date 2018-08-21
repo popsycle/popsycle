@@ -1,18 +1,19 @@
 import * as React from 'react';
 import { Button, ControlLabel, FormControl, FormGroup, HelpBlock, Radio } from 'react-bootstrap';
+import { INewTransaction } from '../reducers/models';
 
 interface IProps {
-	onAddTransaction(transaction:IState):void
+	onAddTransaction(transaction:INewTransaction):void
 }
 
-interface IState {
-	amount: string,
-	date: string,
+interface IFieldGroup {
+	id: string,
 	label: string,
-	transactionType: string // TODO make enum
+	help: string,
+	[prop: string]: any 
 }
 
-const FieldGroup = ({ id, label, help, ...props }) => {
+const FieldGroup = ({ id, label, help, ...props } : IFieldGroup) => {
 	return (
 		<FormGroup controlId={id}>
 			<ControlLabel>{label}</ControlLabel>
@@ -22,8 +23,8 @@ const FieldGroup = ({ id, label, help, ...props }) => {
 	);
 };
 
-class FutureTransactionForm extends React.Component<IProps, IState> {
-	constructor(props) {
+class FutureTransactionForm extends React.Component<IProps, INewTransaction> {
+	constructor(props:IProps) {
 		super(props);
 		this.state = {
 			amount: '',
@@ -44,19 +45,19 @@ class FutureTransactionForm extends React.Component<IProps, IState> {
 		});
 	}
 
-	private handleInputChange(event) {
+	private handleInputChange(event:any) {
 		const target = event.target;
 		const value = target.type === 'checkbox' ? target.checked : target.value;
 		const name = target.name;
 
 		this.setState({
 			[name]: value
-		} as IState);
+		} as INewTransaction);
 	}
 
-	private handleSubmit(event) {
+	private handleSubmit(event:any) {
 		event.preventDefault();
-		this.props.onAddTransaction({...this.state} as IState);
+		this.props.onAddTransaction({...this.state} as INewTransaction);
 		this.resetForm();
 	}
 

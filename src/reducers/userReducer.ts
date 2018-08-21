@@ -3,7 +3,7 @@ const initialState = {
 	name: 'eric'
 };
 
-export default function userReducer(state = initialState, action) {
+export default function userReducer(state = initialState, action:{type:string, payload:any}) {
 	switch (action) {
 	default:
 		return state;

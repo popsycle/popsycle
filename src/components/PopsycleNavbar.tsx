@@ -1,8 +1,8 @@
 import * as React from 'react';
-import { Navbar, Nav, NavItem } from 'react-bootstrap';
+import { Nav, Navbar, NavItem } from 'react-bootstrap';
 
 class PopsycleNavbar extends React.Component {
-	render() {
+	public render() {
 		return (
 			<Navbar>
 				<Navbar.Header>
@@ -10,7 +10,7 @@ class PopsycleNavbar extends React.Component {
 						<a href="#home">Popsycle</a>
 					</Navbar.Brand>
 				</Navbar.Header>
-				<Nav pullRight>
+				<Nav pullRight={true}>
 					<NavItem eventKey={1} href="#demo">
 						Demo
 					</NavItem>

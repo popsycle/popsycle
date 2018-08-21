@@ -1,9 +1,6 @@
 import * as React from 'react';
+import { ITransaction } from '../reducers/models';
 
-export interface ITransaction {
-	amount: number,
-	label: string
-}
 
 class Transaction extends React.Component<ITransaction> {
 	public render() {

@@ -1,15 +1,9 @@
 import * as React from 'react';
-import Transaction, { ITransaction } from './Transaction';
+import { IFutureBalance } from '../reducers/models';
+import Transaction from './Transaction';
 
 interface IProps {
 	futureBalances: IFutureBalance[]
-}
-
-export interface IFutureBalance {
-	amount: number,
-	date: number,
-	start: number,
-	transactions: ITransaction[]
 }
 
 class FutureBalanceList extends React.Component<IProps> {
