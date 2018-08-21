@@ -1,6 +1,6 @@
 const initialState = {
-	name: 'eric',
-	id: 1
+	id: 1,
+	name: 'eric'
 };
 
 export default function userReducer(state = initialState, action) {

@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
-import { addFutureTransaction } from '../actions/ledgerActions.js';
+import { addFutureTransaction } from '../actions/ledgerActions';
 import FutureBalanceList, { IFutureBalance } from './FutureBalanceList';
 import FutureTransactionForm from './FutureTransactionForm';
 import { ITransaction } from './Transaction';

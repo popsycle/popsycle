@@ -7,7 +7,7 @@ const today = normalizeDate(new Date());
 
 function calculateFutureBalances(currentBalance, futureTransactions, numDays) {
 	const futureBalances = [];
-	let currentDate = new Date();
+	const currentDate = new Date();
 	currentDate.setHours(12, 0, 0, 0);
 	let balance = currentBalance;
 
@@ -26,9 +26,9 @@ function calculateFutureBalances(currentBalance, futureTransactions, numDays) {
 			transactions = [];
 		}
 		futureBalances.push({
+			amount: balance,
 			date,
 			start,
-			amount: balance,
 			transactions
 		});
 		currentDate.setDate(currentDate.getDate() + 1);
@@ -38,8 +38,8 @@ function calculateFutureBalances(currentBalance, futureTransactions, numDays) {
 }
 
 // FAKE INITIAL DATA -----------------------------------------------------------
-const currentBalance = 1000;
-const futureTransactions = { // TODO refactor to use a map of the date strings
+const currentBalanceF = 1000;
+const futureTransactionsF = { // TODO refactor to use a map of the date strings
 	[today+1]: {
 		transactions: [{ amount: -100, label: 'new speaker' }]
 	},
@@ -59,10 +59,10 @@ const futureTransactions = { // TODO refactor to use a map of the date strings
 const initialState = {
 	accounts: {
 		'omniAccount': {
-			currentBalance,
-			pastTransactions: {},
-			futureTransactions,
-			futureBalances: calculateFutureBalances(currentBalance, futureTransactions, 10)
+			currentBalance: currentBalanceF,
+			futureBalances: calculateFutureBalances(currentBalanceF, futureTransactionsF, 10),
+			futureTransactions: futureTransactionsF,
+			pastTransactions: {}
 		}
 	}
 };
@@ -98,8 +98,8 @@ export default function ledgerReducer(state = initialState, action) {
 				...state.accounts,
 				[account]: {
 					...state.accounts[account],
-					futureTransactions,
-					futureBalances
+					futureBalances,
+					futureTransactions
 				}
 			}
 		};
