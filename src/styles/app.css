@@ -1,0 +1,7 @@
+.futureBalanceContainer section {
+  display: flex;
+  flex-direction: row; }
+  .futureBalanceContainer section .addTransactionForm {
+    flex-grow: 25; }
+  .futureBalanceContainer section .futureBalanceList {
+    flex-grow: 75; }

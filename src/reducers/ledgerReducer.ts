@@ -4,6 +4,7 @@ import {
 	IFutureBalance,
 	IFutureTransactions,
 	ILedger,
+	INewTransaction,
 	ITransaction
 } from "./models";
 
@@ -11,6 +12,12 @@ const normalizeDate = (date:Date):Date => {
 	date.setHours(12, 0, 0, 0);
 	return date;
 };
+
+function parseFormInputDate(dateString:string):Date {
+	const a = new Date(Date.parse(dateString));
+	a.setDate(a.getUTCDate());
+	return normalizeDate(a);
+}
 
 function sumBalances(balances:IBalanceMap):number {
 	return Object.values(balances).reduce((accumulator, balance) => {
@@ -113,23 +120,33 @@ const initialState:ILedger = {
 	futureTransactions: futureTransactionsF
 };
 
-export default function ledgerReducer(state = initialState, action: {type:string, payload:any}) {
+export default function ledgerReducer
+	(
+		state = initialState,
+		action: {
+			type:string,
+			payload:INewTransaction
+		}
+	) {
 	switch(action.type) {
 	case 'ADD_FUTURE_TRANSACTION': {
 
 		const transaction = action.payload;
-		const date = normalizeDate(new Date(transaction.date)).toDateString();
-		const { label, account } = transaction;
+		// const date = normalizeDate(new Date(transaction.date)).toDateString();
+		const { label, account, date } = transaction;
+		const dateString = parseFormInputDate(date).toDateString();
+
 		let amount = Number(transaction.amount);
 		amount = transaction.transactionType === 'income'? amount : -amount;
+
 		const futureTransactions = {...state.futureTransactions};
-		if (!futureTransactions[date]) {
-			futureTransactions[date] = {
+		if (!futureTransactions[dateString]) {
+			futureTransactions[dateString] = {
 				transactions: []
 			};
 		}
 
-		futureTransactions[date].transactions.push({
+		futureTransactions[dateString].transactions.push({
 			account,
 			amount,
 			label
@@ -144,10 +161,10 @@ export default function ledgerReducer(state = initialState, action: {type:string
 				...state.accounts,
 				[account]: {
 					...state.accounts[account],
-					futureBalances,
-					futureTransactions
 				}
-			}
+			},
+			futureBalances,
+			futureTransactions
 		};
 	}
 	default: 

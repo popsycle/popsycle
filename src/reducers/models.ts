@@ -1,5 +1,6 @@
 
 export interface INewTransaction {
+	account: string,
 	amount: string,
 	date: string,
 	label: string,

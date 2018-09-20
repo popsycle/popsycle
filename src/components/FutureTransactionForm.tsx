@@ -3,6 +3,7 @@ import { Button, ControlLabel, FormControl, FormGroup, HelpBlock, Radio } from '
 import { INewTransaction } from '../reducers/models';
 
 interface IProps {
+	accounts: string[],
 	onAddTransaction(transaction:INewTransaction):void
 }
 
@@ -27,6 +28,7 @@ class FutureTransactionForm extends React.Component<IProps, INewTransaction> {
 	constructor(props:IProps) {
 		super(props);
 		this.state = {
+			account: 'omniAccount',
 			amount: '',
 			date: '',
 			label: '',
@@ -38,6 +40,7 @@ class FutureTransactionForm extends React.Component<IProps, INewTransaction> {
 
 	private resetForm() {
 		this.setState({
+			account: 'omniAccount',
 			amount: '',
 			date: '',
 			label: '',
@@ -120,6 +123,13 @@ class FutureTransactionForm extends React.Component<IProps, INewTransaction> {
 					>
 						Expense
 					</Radio>
+				</FormGroup>
+				{/* TODO figure out how to hooks this up */}
+				<FormGroup controlId="formControlsSelect">
+					<ControlLabel>Select Account</ControlLabel>
+					<FormControl componentClass="select">
+						<option value="omniAccount">omniAccount</option>
+					</FormControl>
 				</FormGroup>
 				<Button type="submit">Add</Button>
 			</form>

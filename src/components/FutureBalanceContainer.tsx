@@ -7,6 +7,7 @@ import FutureBalanceList from './FutureBalanceList';
 import FutureTransactionForm from './FutureTransactionForm';
 
 interface IProps {
+	accounts: string[],
 	currentBalance: number,
 	futureBalances: IFutureBalance[]
 	addFutureTransaction(transaction:INewTransaction):void,
@@ -15,13 +16,24 @@ interface IProps {
 class FutureBalanceContainer extends React.Component<IProps> {
 	public render() {
 		return (
-			<div>
+			<div className="futureBalanceContainer">
 				<h3>Future Balance Estimator</h3>
-				<p>{this.props.currentBalance !== undefined ? `Current Balance: $${this.props.currentBalance}` : 'input a balance'}</p>
-				<h5>Add Transaction</h5>
-				<FutureTransactionForm onAddTransaction={this.props.addFutureTransaction}/>
-				<h5>Future Balances</h5>
-				<FutureBalanceList futureBalances={this.props.futureBalances}/>
+				<p>
+					{this.props.currentBalance !== undefined ? `Current Balance: $${this.props.currentBalance}` : 'input a balance'}
+				</p>
+				<section>
+					<div className="addTransactionForm">
+						<h5>Add Transaction</h5>
+						<FutureTransactionForm
+							onAddTransaction={this.props.addFutureTransaction}
+							accounts={this.props.accounts}
+						/>
+					</div>
+					<div className="futureBalanceList">
+						<h5>Future Balances</h5>
+						<FutureBalanceList futureBalances={this.props.futureBalances} />
+					</div>
+				</section>
 			</div>
 		);
 	}
@@ -29,13 +41,14 @@ class FutureBalanceContainer extends React.Component<IProps> {
 
 const account = 'omniAccount';
 const mapStateToProps = ({ ledger }:{ ledger:ILedger }) => ({
+	accounts: Object.keys(ledger.accounts),
 	currentBalance: ledger.accounts[account].currentBalance,
 	futureBalances: ledger.futureBalances,
 	futureTransactions: ledger.futureTransactions
 });
 
 const mapDispatchToProps = (dispatch:Dispatch) => ({
-	addFutureTransaction: (payload:any) => dispatch(addFutureTransaction(payload))
+	addFutureTransaction: (payload:INewTransaction) => dispatch(addFutureTransaction(payload))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(FutureBalanceContainer);
