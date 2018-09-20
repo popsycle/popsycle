@@ -33,7 +33,7 @@ class FutureBalanceList extends React.Component<IProps> {
 										})}
 									</ul>
 								</td>
-								<td>${balance.start}</td>
+								<td>${balance.startAmount}</td>
 								<td>${balance.amount}</td>
 							</tr>
 						);

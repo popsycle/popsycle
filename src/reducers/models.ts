@@ -8,6 +8,7 @@ export interface INewTransaction {
 
 export interface ITransaction {
 	amount: number,
+	account: string,
 	label: string
 }
 export interface IFutureTransactions {
@@ -16,11 +17,30 @@ export interface IFutureTransactions {
 	}
 }
 
+export interface IBalanceMap {
+	[accountName:string]: number
+}
+
 export interface IFutureBalance {
 	amount: number,
-	date: number,
-	start: number,
+	balances: IBalanceMap,
+	date: string,
+	startAmount: number,
+	startBalances: IBalanceMap,
 	transactions: ITransaction[]
 }
 
+export interface IAccount {
+	name: string,
+	currentBalance: number
+}
 
+export interface IAccountMap {
+	[accountName:string]: IAccount
+}
+
+export interface ILedger {
+	accounts: IAccountMap,
+	futureBalances: IFutureBalance[],
+	futureTransactions: IFutureTransactions
+}

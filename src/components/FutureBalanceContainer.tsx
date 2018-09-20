@@ -2,7 +2,7 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 import { addFutureTransaction } from '../actions/ledgerActions';
-import { IFutureBalance, INewTransaction } from '../reducers/models';
+import { IFutureBalance, ILedger, INewTransaction } from '../reducers/models';
 import FutureBalanceList from './FutureBalanceList';
 import FutureTransactionForm from './FutureTransactionForm';
 
@@ -28,10 +28,10 @@ class FutureBalanceContainer extends React.Component<IProps> {
 }
 
 const account = 'omniAccount';
-const mapStateToProps = (state:any) => ({
-	currentBalance: state.ledger.accounts[account].currentBalance,
-	futureBalances: state.ledger.accounts[account].futureBalances,
-	futureTransactions: state.ledger.accounts[account].futureTransactions
+const mapStateToProps = ({ ledger }:{ ledger:ILedger }) => ({
+	currentBalance: ledger.accounts[account].currentBalance,
+	futureBalances: ledger.futureBalances,
+	futureTransactions: ledger.futureTransactions
 });
 
 const mapDispatchToProps = (dispatch:Dispatch) => ({
